@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Class Flood Segmentation</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1d0035, #29004a);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            min-height: 100vh;
+        }
+
+        h1 {
+            font-weight: 600;
+            font-size: 32px;
+        }
+
+        .upload-card {
+            background: rgba(255,255,255,0.07);
+            padding: 25px;
+            border-radius: 18px;
+            width: 420px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.18);
+            margin: 0 auto;
+        }
+
+        input[type="file"] {
+            padding: 12px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 10px;
+            width: 100%;
+            color: #ececec;
+            cursor: pointer;
+        }
+
+        .uploaded-text {
+            display: none;
+            margin-top: 8px;
+            color: #00ffbf;
+            font-weight: 600;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border-radius: 10px;
+            background: #ff0099;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #d10080;
+        }
+
+        .loader {
+            display: none;
+            margin: 20px auto;
+            width: 55px;
+            height: 55px;
+            border: 7px solid #ddd;
+            border-top: 7px solid #ff00d4;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .legend-box {
+            background: rgba(255,255,255,0.1);
+            width: 340px;
+            margin: 20px auto;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.25);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .color-box {
+            width: 22px;
+            height: 22px;
+            margin-right: 10px;
+            border-radius: 4px;
+        }
+
+        /* --- SIDE BY SIDE OUTPUT --- */
+        .result-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 35px;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .img-box {
+            padding: 12px;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 15px;
+            width: 350px;
+            text-align: center;
+        }
+
+        .img-box img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .download-btn {
+            padding: 8px 14px;
+            border-radius: 8px;
+            background: #00eaff;
+            color: black;
+            border: none;
+            cursor: pointer;
+            margin-top: 12px;
+            transition: 0.3s;
+        }
+
+        .download-btn:hover {
+            background: #0099bb;
+        }
+
+    </style>
+
+    <script>
+        function showLoader() {
+            document.getElementById("loader").style.display = "block";
+        }
+
+        function fileSelected() {
+            document.getElementById("uploaded").style.display = "block";
+        }
+    </script>
+
+</head>
+
+<body>
+
+    <h1> Multi-Class Flood Segmentation</h1>
+
+    <div class="upload-card">
+        <form action="/Color" method="POST" enctype="multipart/form-data" onsubmit="showLoader()">
+
+            <input type="file" name="file" required onchange="fileSelected()">
+            <div id="uploaded" class="uploaded-text">✔ Image uploaded</div>
+
+            <button type="submit" class="btn">Run Segmentation</button>
+
+            <div id="loader" class="loader"></div>
+
+        </form>
+    </div>
+
+    {% if image_path %}
+
+    <div class="legend-box">
+        <h3>Legend</h3>
+
+        <div class="legend-item">
+            <div class="color-box" style="background: rgb(255,0,255);"></div> Buildings / Roads / Vehicles
+        </div>
+        <div class="legend-item">
+            <div class="color-box" style="background: rgb(0,255,0);"></div> Vegetation
+        </div>
+        <div class="legend-item">
+            <div class="color-box" style="background: rgb(0,128,255);"></div> Water / Pool
+        </div>
+    </div>
+
+    <div class="result-container">
+
+        <div class="img-box">
+            <p><strong>Original</strong></p>
+            <img src="{{ image_path }}">
+        </div>
+
+        <div class="img-box">
+            <p><strong>Mask</strong></p>
+            <img src="{{ result_path }}">
+            <a href="{{ result_path }}" download>
+                <button class="download-btn">⬇ Download Mask</button>
+            </a>
+        </div>
+
+        <div class="img-box">
+            <p><strong>Overlay</strong></p>
+            <img src="{{ overlay_path }}">
+            <a href="{{ overlay_path }}" download>
+                <button class="download-btn">⬇ Download Overlay</button>
+            </a>
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flood Segmentation Dashboard</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(135deg, #0a0f24, #111b45);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: #fff;
+        }
+
+        /* Glow Circles */
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.45;
+            animation: float 8s infinite alternate ease-in-out;
+        }
+
+        .c1 { width: 350px; height: 350px; background: #00eaff; top: -60px; left: -60px; }
+        .c2 { width: 420px; height: 420px; background: #ff00f5; bottom: -80px; right: -80px; }
+
+        @keyframes float {
+            from { transform: translateY(0); }
+            to   { transform: translateY(40px); }
+        }
+
+        /* Panel */
+        .panel {
+            width: 440px;
+            padding: 35px;
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(20px);
+            border-radius: 22px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            box-shadow: 0 0 30px rgba(0,255,255,0.08);
+            text-align: center;
+            animation: slideIn 1s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(40px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+            color: #d6f5ff;
+            text-shadow: 0 0 10px rgba(0,255,255,0.4);
+        }
+
+        /* Menu buttons */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 18px;
+            border-radius: 12px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
+
+        .binary {
+            background: linear-gradient(135deg, #00eaff, #0088ff);
+            color: #000;
+        }
+        .binary:hover {
+            box-shadow: 0 0 20px #00eaff;
+            transform: translateY(-3px);
+        }
+
+        .colour {
+            background: linear-gradient(135deg, #ff00f5, #ff4dff);
+            color: #fff;
+        }
+        .colour:hover {
+            box-shadow: 0 0 20px #ff00e6;
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Glow BG -->
+<div class="circle c1"></div>
+<div class="circle c2"></div>
+
+<div class="panel">
+
+    <h1>Flood Segmentation Dashboard</h1>
+
+    <a class="btn binary" href="/binary">Binary Segmentation</a>
+
+    <a class="btn colour" href="/colour">Multi-Class Segmentation</a>
+
+</div>
+
+</body>
+</html>
