@@ -5,14 +5,17 @@ import cv2
 from PIL import Image
 from torchvision import transforms
 from flask import Flask, render_template, request, redirect, url_for
-
+from huggingface_hub import hf_hub_download
 from models.vit_unet import Vit_UNet
 
 
 # ======================================================
 # CONFIG
 # ======================================================
-MODEL_PATH = r"exp\model_vit_unet\vit_unet_weights_Color.pth"
+MODEL_PATH = hf_hub_download(
+    repo_id="RemainCalm/flood-segmentation-vit-unet",
+    filename="vit_unet_weights_Binary.pth",
+)
 
 UPLOAD_FOLDER = "static/uploads"
 RESULT_FOLDER = "static/results"
